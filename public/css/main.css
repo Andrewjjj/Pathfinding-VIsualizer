@@ -1,0 +1,12 @@
+#grid-container {
+    text-align: center;
+}
+
+.grid-box {
+    border: 1px solid gray;
+    min-width: 25px;
+    min-height: 25px;
+    display: inline-block;
+    margin-right: 2px;
+    margin-top: 2px;
+  }
