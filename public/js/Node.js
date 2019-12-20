@@ -20,6 +20,7 @@ class Node {
         this.y = y;
         this.visited = false;
         this.div;
+        this.prev;
     }
 
     setDiv(div){
@@ -30,7 +31,7 @@ class Node {
         this.visited = true;
     }
 
-    animateVisit(){
-        this.div.setAttribute('style', 'background-color: #CEAA8F');
+    animateVisit(color){
+        this.div.setAttribute('style', 'background-color: ' + color);
     }
 }
