@@ -64,11 +64,11 @@ async function startBFS(){
     let pathArray = shortestPath(startNode, endNode);
     for(let e of visitArray){
         await sleep(20);
-        e.animateVisit("#CEAA8F");
+        e.animateVisit();
     }
     for(let e of pathArray){
         await sleep(20);
-        e.animateVisit("#8FCEC9");
+        e.animatePath();
     }
     console.log("BROKEN")
 }

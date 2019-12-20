@@ -20,18 +20,33 @@ class Node {
         this.y = y;
         this.visited = false;
         this.div;
+        this.divChild
         this.prev;
     }
 
     setDiv(div){
         this.div = div;
+        this.divChild = document.createElement('div');
+        this.divChild.style.display = 'block';
+        this.divChild.style.width = "20px";
+        this.divChild.style.height = "20px";
+        this.div.appendChild(this.divChild);
     }
 
     visit(){
         this.visited = true;
     }
 
-    animateVisit(color){
-        this.div.setAttribute('style', 'background-color: ' + color);
+    animateVisit(){
+        // this.div.setAttribute('style', 'background-color: ' + color);
+        // let div = document.createElement('div');
+        this.divChild.className += "visitedNode";
+        
+        
+        // this.div.className += "visitedNode";
+    }
+
+    animatePath(){
+        this.divChild.className += " pathNode";
     }
 }
