@@ -1,49 +1,78 @@
+// import { resolve } from "path";
 
-var START_NODE = [10,10];
-var END_NODE = [30,10];
+// import { BFS } from "BFS.js";
+// import {Queue} from "/algorithms/Queue.js";
 
+var START_NODE = [12,10];
+var END_NODE = [18,10];
+var startNode;
+var endNode;
 
+const nodeBox = new NodeBox();
+console.log("Start")
 init();
 
 function init(){
     initializeGrid();
     // console.log(START_NODE)
     setupStartEndNode();
+    startBFS();
 }
 
 function initializeGrid(){
     const gridContainer = document.getElementById('grid-container');
-
+    var nodeContainer=[];
     for(let row=0; row<20; row++){
         let rowContainer = createGridRow();
-        for(let col=0; col<40; col++){
-            let node = createGridPiece();
-            rowContainer.appendChild(node);
+        let nodeRow=[];
+        for(let col=0; col<30; col++){
+            let node = new Node(col, row);
+            let div = createGridPiece();
+            rowContainer.appendChild(div);
+            node.setDiv(div);
+            nodeRow.push(node);
         }
+        nodeContainer.push(nodeRow);
         gridContainer.appendChild(rowContainer);
     }
+    nodeBox.set(nodeContainer);
 }
 
 function setupStartEndNode(){
     // console.log(START_NODE);
-    const startNode = getDivAtIndex(START_NODE);
-    const endNode = getDivAtIndex(END_NODE);
-    setDivColor(startNode, '#7DCEA0');
-    setDivColor(endNode, "#BB8FCE");
+    startNode = nodeBox.get(START_NODE[0], START_NODE[1]);
+    endNode = nodeBox.get(END_NODE[0],END_NODE[1]);
+    // const startNodeDiv = getDivAtIndex(startNode.x, startNode.y);
+    // const endNodeDiv = getDivAtIndex(endNode.x, endNode.y);
+    setNodeColor(startNode, '#7DCEA0');
+    setNodeColor(endNode, "#BB8FCE");
 }
 
-function setDivColor(div, color){
-    div.setAttribute('style', 'background-color: ' + color);
+function setNodeColor(node, color){
+    node.div.setAttribute('style', 'background-color: ' + color);
 }
 
-function getDivAtIndex(pos){
+function getDivAtIndex(x, y){
     const gridContainer = document.getElementById('grid-container');
-    const pos_x = pos[0];
-    const pos_y = pos[1];
-    return gridContainer.children[pos_y].children[pos_x];
+    return gridContainer.children[y].children[x];
 }
 
+async function startBFS(){
+    // let startIdx = [startNode.x, startNode.y];
+    // let endIdx = [endNode.x, endNode.y];
+    let visitArray = BFS(startNode, endNode, null, null);
+    for(let e of visitArray){
+        await sleep(20);
+        e.animateVisit();
+    }
+    console.log("BROKEN")
+}
+function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+// async function animateVisitNode(visitArray){
 
+// }
 
 function createGridPiece(){
     const div = document.createElement('div');
