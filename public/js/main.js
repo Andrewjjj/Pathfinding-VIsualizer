@@ -10,8 +10,9 @@ var endNode;
 var stopFlag=false;
 var running=false;
 
-var startDragVar = false;
+// var startDragVar = false;
 var startDragWall = false;
+var mouseDown = false;
 
 const nodeBox = new NodeBox();
 console.log("Start")
@@ -34,9 +35,10 @@ function initializeGrid(){
         for(let col=0; col<30; col++){
             let node = new Node(col, row);
             let div = createGridPiece(row, col);
-            div.addEventListener("mousedown", switchWall);
-            div.addEventListener("dragenter", switchWallDrag);
-            div.addEventListener("mouseup", switchWallExit);
+            addDivEventListener(div);
+            // div.addEventListener("mousedown", switchWall);
+            // div.addEventListener("mouseenter", switchWallDrag);
+            // div.addEventListener("mouseup", switchWallExit);
             rowContainer.appendChild(div);
             node.setDiv(div);
             nodeRow.push(node);
@@ -46,37 +48,77 @@ function initializeGrid(){
     }
     nodeBox.set(nodeContainer);
 }
-function switchWall(e){
-    // e.preventDefault();
-    let div = e.srcElement.parentElement;
-    startDragVar = true;
-    let y = div.getAttribute("rownum");
-    let x = div.getAttribute("colnum");
-    let node = nodeBox.get(x, y);
-    node.switchWall();
-    // if(node )
-}
-var qq;
-function switchWallDrag(e){
-    // e.preventDefault();
-    console.log("DragEnter")
-    let div = e.srcElement.parentElement;
-    console.log(div.classList);
-    if(div.classList.contains("grid-box")){
-        console.log("YEs!")
-        let y = div.getAttribute("rownum");
-        let x = div.getAttribute("colnum");
-        console.log(x, y);
-        let node = nodeBox.get(x, y);
-        node.switchWall();
+
+function addDivEventListener(div){
+
+    div.onmousedown = (e) => {
+
+        // console.log(window.event);
+        e.preventDefault();
+        mouseDown = true;
+        // console.log(e);
+        let [x,y] = getDivPostion(e.srcElement.parentElement);
+        switchWall(x,y);
     }
-    else{
-        console.log("NOPE!")
+    div.onmouseenter = (e) => {
+
+        // console.log(window.event);
+        // console.log(e);
+        e.preventDefault();
+        if(mouseDown == true){
+            let [x,y] = getDivPostion(e.srcElement);
+            switchWall(x,y);
+            // console.log("mouse Enter")
+        }
+    }
+    div.onmouseup = (e) => {
+        // let [x,y] = getDivPostion(e.srcElement);
+        e.preventDefault();
+        mouseDown = false;
     }
 }
 
+function getDivPostion(div){
+    let x = div.getAttribute("colnum");
+    let y = div.getAttribute("rownum");
+    return [x,y];
+}
+
+function switchWall(x,y){
+    // e.preventDefault();
+    // console.log(e);
+    // let div = e.srcElement;
+    // console.log(div);
+    // startDragVar = true;
+    // let y = div.getAttribute("rownum");
+    // let x = div.getAttribute("colnum");
+    console.log("SWITCHWALL")
+    let node = nodeBox.get(x, y);
+    console.log(node);
+    node.switchWall();
+    // if(node )
+}
+// var qq;
+// function switchWallDrag(e){
+//     // e.preventDefault();
+//     console.log("DragEnter")
+//     let div = e.srcElement.parentElement;
+//     console.log(div.classList);
+//     if(div.classList.contains("grid-box")){
+//         console.log("Yes!")
+//         let y = div.getAttribute("rownum");
+//         let x = div.getAttribute("colnum");
+//         console.log(x, y);
+//         let node = nodeBox.get(x, y);
+//         node.switchWall();
+//     }
+//     else{
+//         console.log("NOPE!")
+//     }
+// }
+
 function switchWallExit(e){
-    startDragVar = false;
+    // startDragVar = false;
 }
 
 function setupStartEndNode(){
@@ -113,14 +155,18 @@ function reset(){
 
 }
 
-var qq;
+// var qq;
 function startBFS(){
     disableButtons();
-    reset();
-    let visitArray = BFS(startNode, endNode, null, null);
-    let pathArray = shortestPath(startNode, endNode);
+    // reset();
+    let [visitArray, valid] = BFS(startNode, endNode, null, null);
+    let pathArray = [];
+    if(valid){
+        pathArray = shortestPath(startNode, endNode);
+    }
     animate(visitArray, pathArray)
     .then(() => {
+        if(!valid) alert("No Valid Path Found!")
         enableButtons();
     })
 }
@@ -133,9 +179,9 @@ function stopAnimation(){
 
 function startDFS(){
     disableButtons();
-    reset();
+    // reset();
     let visitArray = DFS(startNode, endNode, null, null);
-    qq=visitArray;
+    // qq=visitArray;
     let pathArray = shortestPath(startNode, endNode);
     animate(visitArray, pathArray)
     .then(() => {
@@ -145,11 +191,12 @@ function startDFS(){
 
 function startDijkstra(){
     disableButtons();
-    reset();
+    // reset();
     let visitArray = Dijkstra(startNode, endNode, null, null);
     let pathArray = shortestPath(startNode, endNode);
     animate(visitArray, pathArray)
     .then(() => {
+        
         enableButtons();
     })
 }
@@ -157,6 +204,7 @@ function startDijkstra(){
 async function animate(visitArray, pathArray){
     running = true;
     for(let e of visitArray){
+
         if(running == false){
             reset();
             return;
@@ -165,6 +213,7 @@ async function animate(visitArray, pathArray){
         e.animateVisit();
     }
     for(let e of pathArray){
+
         if(running == false){
             reset();
             return;
@@ -172,6 +221,7 @@ async function animate(visitArray, pathArray){
         await sleep(20);
         e.animatePath();
     }
+    await sleep(1000);
     running = false;
 }
 
@@ -225,3 +275,26 @@ class dragApp {
 
     }
 }
+
+
+// let e=window.event;
+// window.event;
+
+// pauseEvent(e);
+// function pauseEvent(e){
+//     if(e.stopPropagation) e.stopPropagation();
+//     if(e.preventDefault) e.preventDefault();
+//     e.cancelBubble=true;
+//     e.returnValue=false;
+//     return false;
+// }
+
+document.onselectstart = new Function ("return false")
+window.onmouseup = (e) => {
+    mouseDown = false;
+}
+// if (window.sidebar) {
+//   document.onmousedown = disableselect
+//   document.onclick = reEnable
+// }
+

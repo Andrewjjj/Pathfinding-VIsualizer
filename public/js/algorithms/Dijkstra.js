@@ -15,7 +15,7 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
             let neighborNodes = getAllNeighborNodes(node);
             //
             for(let n of neighborNodes){
-                if(n.visited == false){
+                if(n.visited == false && n.isWall() == false){
                     if(node.distance + 1 < n.distance){
                         n.distance = node.distance + 1;
                         n.prev = node;

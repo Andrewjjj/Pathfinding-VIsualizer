@@ -6,35 +6,47 @@ function BFS(startNode, endNode, size, wallNodes){
     let queue = new Queue();
     queue.enqueue(startNode);
     startNode.visit();
+    // let safe=100;
     while(true){
+        // console.log(queue.data);
+        if(queue.length() == 0){
+            console.log("No path Found")
+            return [visitArray, false];
+        }
         let queueLen = queue.length();
+        // safe--;
+        // if(safe < 0) return visitArray;
         // console.log("Queue Len: " + queueLen);
-        while(queueLen--){
+        while(queueLen != 0){
             let node = queue.dequeue();
             var neighborNodes = getNeighborNodes(node);
             // console.log(neighborNodes);
             for(let n of neighborNodes){
-                if(n.visited == false){
+                console.log
+                if(n.visited == false && n.isWall() == false){
                     queue.enqueue(n);
                     n.visit();
                     n.prev = node;
                     visitArray.push(n);
                     if(n == endNode){
-                        return visitArray;
+                        return [visitArray, true];
                     }
                 }
             }
-            // queueLen--;
+            queueLen--;
         } 
+        
     }
-    return visitArray;
+    // return visitArray;
 }
 
 function BidirectionalBFS(startNode, endNode, size, wallNodes){
     let startQueue = new Queue();
     let endQueue = new Queue();
-
+    startQueue.enqueue(startQueue);
+    endQueue.enqueue(endQueue);
     while(true){
+        
         break;
     }
 

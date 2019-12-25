@@ -15,7 +15,7 @@ function DFS(startNode, endNode, size, wallNodes){
         // console.log(node);
         let neighborNodes = getNeighborNodes(node);
         for (let n of neighborNodes){
-            if(n.visited == false){
+            if(n.visited == false && n.isWall() == false){
                 stack.push(n);
                 // n.prev = node;
                 // visitArray.push(n);

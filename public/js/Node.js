@@ -66,18 +66,24 @@ class Node {
 
     reset(){
         this.visited = false;
-        this.divChild.className = "";
+        this.divChild.className = " node";
         this.prev = null;
         this.distance = Infinity;
+        this.wall = false;
     }
 
     switchWall(){
+        console.log("switchwall")
         if(this.startNode == false && this.endNode == false){
+            console.log("2")
             this.wall = (this.wall != true);
             if(this.wall == true){
+                console.log("3")
                 this.divChild.className = this.divChild.className.replace(" node", " wallNode");
+
             }
             else{
+                console.log("4")
                 this.divChild.className = this.divChild.className.replace(" wallNode", " node");
             }
         }
