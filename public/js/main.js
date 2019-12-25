@@ -64,12 +64,33 @@ function reset(){
     }
 }
 
-
-async function startBFS(){
+var qq;
+function startBFS(){
     // let startIdx = [startNode.x, startNode.y];
     // let endIdx = [endNode.x, endNode.y];
     let visitArray = BFS(startNode, endNode, null, null);
     let pathArray = shortestPath(startNode, endNode);
+    // for(let e of visitArray){
+    //     await sleep(20);
+    //     e.animateVisit();
+    // }
+    // for(let e of pathArray){
+    //     await sleep(20);
+    //     e.animatePath();
+    // }
+    
+    animate(visitArray, pathArray)
+    console.log("BROKEN")
+}
+
+function startDFS(){
+    let visitArray = DFS(startNode, endNode, null, null);
+    qq=visitArray;
+    let pathArray = shortestPath(startNode, endNode);
+    animate(visitArray, pathArray);
+}
+
+async function animate(visitArray, pathArray){
     for(let e of visitArray){
         await sleep(20);
         e.animateVisit();
@@ -78,8 +99,10 @@ async function startBFS(){
         await sleep(20);
         e.animatePath();
     }
-    console.log("BROKEN")
 }
+
+
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
