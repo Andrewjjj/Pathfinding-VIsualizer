@@ -22,6 +22,7 @@ class Node {
         this.div;
         this.divChild
         this.prev;
+        this.distance = Infinity;
     }
 
     setDiv(div){
@@ -46,7 +47,7 @@ class Node {
         // let div = document.createElement('div');
         this.divChild.className += " visitedNode";
         
-        
+        // console.log("Animate");
         // this.div.className += "visitedNode";
     }
 
@@ -58,5 +59,6 @@ class Node {
         this.visited = false;
         this.divChild.className = "";
         this.prev = null;
+        this.distance = Infinity;
     }
 }
