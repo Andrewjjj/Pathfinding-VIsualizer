@@ -29,9 +29,13 @@ class Node {
         this.div;
         this.divChild
         this.prev;
+<<<<<<< HEAD
         this.wall = false;
         this.startNode = false;
         this.endNode = false;
+=======
+        this.distance = Infinity;
+>>>>>>> 3dd72d36e0b3ba9ac1087c61dc3d3e569fc8127e
     }
 
     setDiv(div){
@@ -54,6 +58,12 @@ class Node {
 
     animateVisit(){
         this.divChild.className += " visitedNode";
+<<<<<<< HEAD
+=======
+        
+        // console.log("Animate");
+        // this.div.className += "visitedNode";
+>>>>>>> 3dd72d36e0b3ba9ac1087c61dc3d3e569fc8127e
     }
 
     animatePath(){
@@ -64,6 +74,7 @@ class Node {
         this.visited = false;
         this.divChild.className = "";
         this.prev = null;
+        this.distance = Infinity;
     }
 
     switchWall(){

@@ -1,48 +1,48 @@
-// import { Queue } from "Queue";
-// import { Stack } from "Stack";
-
-function BFS(startNode, endNode, size, wallNodes){
-    let visitArray=[]; 
+function Dijkstra(startNode, endNode, size=null, wallNode=null) {
     let queue = new Queue();
+    let visitArray=[];
     queue.enqueue(startNode);
-    startNode.visit();
+    startNode.distance = 0;
+    visitArray.push(startNode);
     while(true){
-        let queueLen = queue.length();
-        // console.log("Queue Len: " + queueLen);
-        while(queueLen--){
+        let queueSize = queue.length();
+        let endNodeNeighbors = getAllNeighborNodes(endNode);
+        while(queueSize--){
             let node = queue.dequeue();
-            var neighborNodes = getNeighborNodes(node);
-            // console.log(neighborNodes);
+            node.visit();
+
+            // Goto the vertex with the shortest distance
+            let neighborNodes = getAllNeighborNodes(node);
+            //
             for(let n of neighborNodes){
                 if(n.visited == false){
+                    if(node.distance + 1 < n.distance){
+                        n.distance = node.distance + 1;
+                        n.prev = node;
+                    }
                     queue.enqueue(n);
                     n.visit();
-                    n.prev = node;
                     visitArray.push(n);
-                    if(n == endNode){
-                        return visitArray;
-                    }
                 }
             }
-            // queueLen--;
-        } 
+        }
+        // console.log(visitArray);
+        if(neighborsAllVisited(endNode)){
+            return visitArray;
+        }
     }
-    return visitArray;
 }
 
-function shortestPath(startNode, endNode){
-    var path = [];
-    var node = endNode;
-    path.push(node);
-    while(node != startNode){
-        node = node.prev;
-        path.push(node);
+function neighborsAllVisited(node){
+    let neighborNodes = getAllNeighborNodes(node);
+    let count=0;
+    for(let n of neighborNodes){
+        if(n.visited == true) count++;
     }
-    return path;
+    return count==4;
 }
 
-
-function getNeighborNodes(node, wallNodes){
+function getAllNeighborNodes(node, wallNodes){
     let neighborsList=[];
     
     // TODO: Change this Later
@@ -55,7 +55,7 @@ function getNeighborNodes(node, wallNodes){
         //         neighborsList.push(nodeBox.get(node.x-1, node.y+1));
         //     }
         // }
-        if(nodeBox.get(node.x-1, node.y).visited == false){
+        if(nodeBox.get(node.x-1, node.y)){
             neighborsList.push(nodeBox.get(node.x-1, node.y));
         }
         // if(node.y != 0){
@@ -66,7 +66,7 @@ function getNeighborNodes(node, wallNodes){
         
     }
     if(node.y != 0){
-        if(nodeBox.get(node.x, node.y-1).visited == false){
+        if(nodeBox.get(node.x, node.y-1)){
             neighborsList.push(nodeBox.get(node.x, node.y-1));
         }
     }
@@ -76,7 +76,7 @@ function getNeighborNodes(node, wallNodes){
         //         neighborsList.push(nodeBox.get(node.x+1, node.y-1));
         //     }
         // }
-        if(nodeBox.get(node.x+1, node.y).visited == false){
+        if(nodeBox.get(node.x+1, node.y)){
             neighborsList.push(nodeBox.get(node.x+1, node.y));
         }
         // if(node.y != MAX_HEIGHT){
@@ -86,10 +86,9 @@ function getNeighborNodes(node, wallNodes){
         // }
     }
     if(node.y != MAX_HEIGHT){
-        if(nodeBox.get(node.x, node.y+1).visited == false){
+        if(nodeBox.get(node.x, node.y+1)){
             neighborsList.push(nodeBox.get(node.x, node.y+1));
         }
     }
     return neighborsList;
 }
-

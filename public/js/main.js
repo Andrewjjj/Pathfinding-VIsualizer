@@ -7,6 +7,8 @@ var START_NODE = [12,7];
 var END_NODE = [18,7];
 var startNode;
 var endNode;
+var stopFlag=false;
+var running=false;
 
 var startDragVar = false;
 var startDragWall = false;
@@ -99,30 +101,104 @@ function getDivAtIndex(x, y){
 }
 
 function reset(){
+    if(running == true){
+        running = false;
+    }
     for(let nodeRow of nodeBox.nodeBox){
         for(let node of nodeRow){
-            console.log(node);
+            // console.log(node);
             node.reset();
         }
     }
+
 }
 
-
-async function startBFS(){
-    // let startIdx = [startNode.x, startNode.y];
-    // let endIdx = [endNode.x, endNode.y];
+var qq;
+function startBFS(){
+    disableButtons();
+    reset();
     let visitArray = BFS(startNode, endNode, null, null);
     let pathArray = shortestPath(startNode, endNode);
+    animate(visitArray, pathArray)
+    .then(() => {
+        enableButtons();
+    })
+}
+
+function stopAnimation(){
+    if(running == true){
+        stopFlag = true;
+    }
+}
+
+function startDFS(){
+    disableButtons();
+    reset();
+    let visitArray = DFS(startNode, endNode, null, null);
+    qq=visitArray;
+    let pathArray = shortestPath(startNode, endNode);
+    animate(visitArray, pathArray)
+    .then(() => {
+        enableButtons();
+    })
+}
+
+function startDijkstra(){
+    disableButtons();
+    reset();
+    let visitArray = Dijkstra(startNode, endNode, null, null);
+    let pathArray = shortestPath(startNode, endNode);
+    animate(visitArray, pathArray)
+    .then(() => {
+        enableButtons();
+    })
+}
+
+async function animate(visitArray, pathArray){
+    running = true;
     for(let e of visitArray){
+        if(running == false){
+            reset();
+            return;
+        }
         await sleep(20);
         e.animateVisit();
     }
     for(let e of pathArray){
+        if(running == false){
+            reset();
+            return;
+        }
         await sleep(20);
         e.animatePath();
     }
-    console.log("BROKEN")
+    running = false;
 }
+
+function disableButtons(){
+    let buttons = [
+        document.getElementById("BFSBtn"),
+        document.getElementById("DFSBtn"),
+        document.getElementById("DijkstraBtn"),
+    ]
+    // console.log(buttons);
+    for(let button of buttons){
+        button.disabled = true;
+    }
+}
+
+function enableButtons(){
+    let buttons = [
+        document.getElementById("BFSBtn"),
+        document.getElementById("DFSBtn"),
+        document.getElementById("DijkstraBtn"),
+    ]
+    for(let button of buttons){
+        button.disabled = false;
+    }
+}
+
+
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
 }
