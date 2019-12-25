@@ -8,13 +8,19 @@ var END_NODE = [18,7];
 var startNode;
 var endNode;
 
+var startDragVar = false;
+var startDragWall = false;
+
 const nodeBox = new NodeBox();
 console.log("Start")
 init();
 
 function init(){
-    initializeGrid();
-    setupStartEndNode();
+    try{
+        initializeGrid();
+        setupStartEndNode();
+
+    } catch(err){console.log(err)}
 }
 
 function initializeGrid(){
@@ -25,7 +31,10 @@ function initializeGrid(){
         let nodeRow=[];
         for(let col=0; col<30; col++){
             let node = new Node(col, row);
-            let div = createGridPiece();
+            let div = createGridPiece(row, col);
+            div.addEventListener("mousedown", switchWall);
+            div.addEventListener("dragenter", switchWallDrag);
+            div.addEventListener("mouseup", switchWallExit);
             rowContainer.appendChild(div);
             node.setDiv(div);
             nodeRow.push(node);
@@ -35,6 +44,38 @@ function initializeGrid(){
     }
     nodeBox.set(nodeContainer);
 }
+function switchWall(e){
+    // e.preventDefault();
+    let div = e.srcElement.parentElement;
+    startDragVar = true;
+    let y = div.getAttribute("rownum");
+    let x = div.getAttribute("colnum");
+    let node = nodeBox.get(x, y);
+    node.switchWall();
+    // if(node )
+}
+var qq;
+function switchWallDrag(e){
+    // e.preventDefault();
+    console.log("DragEnter")
+    let div = e.srcElement.parentElement;
+    console.log(div.classList);
+    if(div.classList.contains("grid-box")){
+        console.log("YEs!")
+        let y = div.getAttribute("rownum");
+        let x = div.getAttribute("colnum");
+        console.log(x, y);
+        let node = nodeBox.get(x, y);
+        node.switchWall();
+    }
+    else{
+        console.log("NOPE!")
+    }
+}
+
+function switchWallExit(e){
+    startDragVar = false;
+}
 
 function setupStartEndNode(){
     // console.log(START_NODE);
@@ -42,6 +83,8 @@ function setupStartEndNode(){
     endNode = nodeBox.get(END_NODE[0],END_NODE[1]);
     // const startNodeDiv = getDivAtIndex(startNode.x, startNode.y);
     // const endNodeDiv = getDivAtIndex(endNode.x, endNode.y);
+    startNode.startNode = true;
+    endNode.endNode = true;
     setNodeColor(startNode, '#7DCEA0');
     setNodeColor(endNode, "#BB8FCE");
 }
@@ -87,9 +130,11 @@ function sleep(ms){
 
 // }
 
-function createGridPiece(){
+function createGridPiece(row, col){
     const div = document.createElement('div');
     div.setAttribute('class', 'grid-box');
+    div.setAttribute('rowNum', row);
+    div.setAttribute('colNum', col);
     return div;
 }
 
@@ -97,4 +142,10 @@ function createGridRow(){
     const div = document.createElement('div');
     div.setAttribute('class', 'grid-row');
     return div;
+}
+
+class dragApp {
+    static dragStart(e){
+
+    }
 }

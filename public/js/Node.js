@@ -14,6 +14,13 @@ class NodeBox{
     }
 }
 
+class NodeAnimator {
+    constructor(node, state){
+        this.node = node;
+        this.state = state;
+    }
+}
+
 class Node {
     constructor(x, y){
         this.x = x;
@@ -22,6 +29,9 @@ class Node {
         this.div;
         this.divChild
         this.prev;
+        this.wall = false;
+        this.startNode = false;
+        this.endNode = false;
     }
 
     setDiv(div){
@@ -30,6 +40,7 @@ class Node {
         this.divChild.style.display = 'block';
         this.divChild.style.width = "25px";
         this.divChild.style.height = "25px";
+        this.divChild.className += " node";
         this.div.appendChild(this.divChild);
     }
 
@@ -42,12 +53,7 @@ class Node {
     }
 
     animateVisit(){
-        // this.div.setAttribute('style', 'background-color: ' + color);
-        // let div = document.createElement('div');
         this.divChild.className += " visitedNode";
-        
-        
-        // this.div.className += "visitedNode";
     }
 
     animatePath(){
@@ -58,5 +64,31 @@ class Node {
         this.visited = false;
         this.divChild.className = "";
         this.prev = null;
+    }
+
+    switchWall(){
+        if(this.startNode == false && this.endNode == false){
+            this.wall = (this.wall != true);
+            if(this.wall == true){
+                this.divChild.className = this.divChild.className.replace(" node", " wallNode");
+            }
+            else{
+                this.divChild.className = this.divChild.className.replace(" wallNode", " node");
+            }
+        }
+    }
+
+    isWall(){
+        return (this.wall == true)
+    }
+
+    setWall(){
+        this.divChild.className = this.divChild.className.replace(" node", " wallNode");
+        this.wall = true;
+    }
+
+    setNormal(){
+        this.divChild.className = this.divChild.className.replace(" wallNode", " node");
+        this.wall = false;
     }
 }
