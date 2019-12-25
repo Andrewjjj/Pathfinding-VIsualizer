@@ -30,6 +30,16 @@ function BFS(startNode, endNode, size, wallNodes){
     return visitArray;
 }
 
+function BidirectionalBFS(startNode, endNode, size, wallNodes){
+    let startQueue = new Queue();
+    let endQueue = new Queue();
+
+    while(true){
+        break;
+    }
+
+}
+
 function shortestPath(startNode, endNode){
     var path = [];
     var node = endNode;
