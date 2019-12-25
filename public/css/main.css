@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
     background-size: contain;
     animation-name: visitedNodeAnimation;
-    animation-duration: 2.0s;
+    animation-duration: 1.0s;
     animation-timing-function: ease-out;
     animation-delay: 0;
     animation-direction: alternate;
@@ -29,12 +29,12 @@
 
 .pathNode {
     /* background-image: url(diamond.svg); */
-    background-color: yellow;
+    background-color: green;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     animation-name: visitedPathAnimation;
-    animation-duration: 2.0s;
+    animation-duration: 0.2s;
     animation-timing-function: ease-out;
     animation-delay: 0;
     animation-direction: alternate;
@@ -68,21 +68,21 @@
 
 @keyframes visitedPathAnimation {
     0% {
-        transform: scale(.3);
-        background-color: rgba(160, 0, 27, 0.75);
+        transform: scale(.9);
+        background-color: rgba(0, 160, 21, 0.75);
         border-radius: 100%;
     }
 
     50% {
-        background-color: rgba(135, 0, 161, 0.75);
+        background-color: rgba(20, 94, 48, 0.75);
     }
 
     75% {
         transform: scale(1.2);
-        background-color: rgba(201, 144, 255, 0.75);
+        background-color: rgba(196, 235, 189, 0.75);
     }
     100% {
         transform: scale(1.0);
-        background-color: rgba(73, 64, 151, 0.75);
+        background-color: rgba(82, 185, 62, 0.75);
     }
 }

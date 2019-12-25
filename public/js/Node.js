@@ -28,8 +28,8 @@ class Node {
         this.div = div;
         this.divChild = document.createElement('div');
         this.divChild.style.display = 'block';
-        this.divChild.style.width = "20px";
-        this.divChild.style.height = "20px";
+        this.divChild.style.width = "25px";
+        this.divChild.style.height = "25px";
         this.div.appendChild(this.divChild);
     }
 
@@ -37,10 +37,14 @@ class Node {
         this.visited = true;
     }
 
+    animateQueue(){
+        this.divChild.className += "queueNode";
+    }
+
     animateVisit(){
         // this.div.setAttribute('style', 'background-color: ' + color);
         // let div = document.createElement('div');
-        this.divChild.className += "visitedNode";
+        this.divChild.className += " visitedNode";
         
         
         // this.div.className += "visitedNode";
@@ -48,5 +52,11 @@ class Node {
 
     animatePath(){
         this.divChild.className += " pathNode";
+    }
+
+    reset(){
+        this.visited = false;
+        this.divChild.className = "";
+        this.prev = null;
     }
 }

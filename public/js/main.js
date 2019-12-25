@@ -3,8 +3,8 @@
 // import { BFS } from "BFS.js";
 // import {Queue} from "/algorithms/Queue.js";
 
-var START_NODE = [12,10];
-var END_NODE = [18,10];
+var START_NODE = [12,7];
+var END_NODE = [18,7];
 var startNode;
 var endNode;
 
@@ -14,15 +14,13 @@ init();
 
 function init(){
     initializeGrid();
-    // console.log(START_NODE)
     setupStartEndNode();
-    startBFS();
 }
 
 function initializeGrid(){
     const gridContainer = document.getElementById('grid-container');
     var nodeContainer=[];
-    for(let row=0; row<20; row++){
+    for(let row=0; row<14; row++){
         let rowContainer = createGridRow();
         let nodeRow=[];
         for(let col=0; col<30; col++){
@@ -56,6 +54,16 @@ function getDivAtIndex(x, y){
     const gridContainer = document.getElementById('grid-container');
     return gridContainer.children[y].children[x];
 }
+
+function reset(){
+    for(let nodeRow of nodeBox.nodeBox){
+        for(let node of nodeRow){
+            console.log(node);
+            node.reset();
+        }
+    }
+}
+
 
 async function startBFS(){
     // let startIdx = [startNode.x, startNode.y];
