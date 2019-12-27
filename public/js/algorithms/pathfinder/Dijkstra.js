@@ -43,7 +43,7 @@ function neighborsAllVisited(node){
     return count==4;
 }
 
-function getAllNeighborNodes(node, wallNodes){
+function getAllNeighborNodes(node, wallNodes=null){
     let neighborsList=[];
     
     // TODO: Change this Later

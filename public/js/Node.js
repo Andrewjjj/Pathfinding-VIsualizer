@@ -30,6 +30,7 @@ class Node {
         this.divChild
         this.prev;
         this.wall = false;
+        this.wallVisited = false;
         this.startNode = false;
         this.endNode = false;
         this.distance = Infinity;
@@ -50,6 +51,9 @@ class Node {
 
     visit(){
         this.visited = true;
+    }
+    visitWall(){
+        this.wallVisited = true;
     }
 
     animateQueue(){
