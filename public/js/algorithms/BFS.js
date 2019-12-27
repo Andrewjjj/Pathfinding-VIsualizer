@@ -43,10 +43,51 @@ function BFS(startNode, endNode, size, wallNodes){
 function BidirectionalBFS(startNode, endNode, size, wallNodes){
     let startQueue = new Queue();
     let endQueue = new Queue();
+
+    let visitArray = [];
+    // let visitArray2 = [];
     startQueue.enqueue(startQueue);
     endQueue.enqueue(endQueue);
     while(true){
-        
+        let queue1len = startQueue.length();
+        let queue2len = startQueue.length();
+
+        if(queue1len == 0 && queue2len == 0){
+            return [visitArray, false];
+        }
+
+        while(queue1len != 0 || queue2len != 0){
+            if(queue1len != 0){
+                let node = startQueue.dequeue();
+                let neighborNodes = getAllNeighborNodes(node);
+                for (let n of neighborNodes){
+                    if(n.visited1 == false){
+                        startQueue.enqueue(n);
+                        n.prev = node;
+                        n.visited1 = true;
+                        visitArray.push(n);
+                        if(n.visited2 == true){
+                            return [visitArray, true];
+                        }
+                    }
+                }
+            }
+            if(queue2len != 0){
+                let node = endQueue.dequeue();
+                let neighborNodes = getAllNeighborNodes(node);
+                for(let n of neighborNodes){
+                    if(n.visited2 == false){
+                        endQueue.enqueue(n);
+                        n.visited2 = true;
+                        node.prev = n;
+                        visitArray.push(n);
+                        if(n.visited1 == true){
+                            return [visitArray, true];
+                        }
+                    }
+                }
+            }
+        }
         break;
     }
 

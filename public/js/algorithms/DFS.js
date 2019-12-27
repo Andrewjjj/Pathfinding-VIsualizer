@@ -10,7 +10,7 @@ function DFS(startNode, endNode, size, wallNodes){
         visitArray.push(node);
         prev = node;
         if(node == endNode){
-            return visitArray;
+            return [visitArray, true];
         }
         // console.log(node);
         let neighborNodes = getNeighborNodes(node);
@@ -23,5 +23,5 @@ function DFS(startNode, endNode, size, wallNodes){
             }
         }
     }
-    return visitArray;
+    return [visitArray, false];
 }

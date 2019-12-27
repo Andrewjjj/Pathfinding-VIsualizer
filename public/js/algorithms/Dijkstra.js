@@ -6,6 +6,7 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
     visitArray.push(startNode);
     while(true){
         let queueSize = queue.length();
+        if(queueSize == 0) return [visitArray, false];
         let endNodeNeighbors = getAllNeighborNodes(endNode);
         while(queueSize--){
             let node = queue.dequeue();
@@ -28,7 +29,7 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
         }
         // console.log(visitArray);
         if(neighborsAllVisited(endNode)){
-            return visitArray;
+            return [visitArray, true];
         }
     }
 }

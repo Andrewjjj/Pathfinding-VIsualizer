@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
-<button id="BFSBtn" onclick="startBFS()">Start BFS</button> 
-<button id="DFSBtn" onclick="startDFS()">Start DFS</button> 
-<button id="DijkstraBtn" onclick="startDijkstra()">Start Dijkstra</button> 
+<button id="BFSBtn" onclick="startSearch('BFS');">Start BFS</button> 
+<button id="DFSBtn" onclick="startSearch('DFS');">Start DFS</button> 
+<button id="DijkstraBtn" onclick="startSearch('Dijkstra');">Start Dijkstra</button> 
 
 <button onclick="reset()">Reset</button> 
+<button onclick="resetWall()">ResetWall</button> 
 <div id='grid-container'>
     
 </div>

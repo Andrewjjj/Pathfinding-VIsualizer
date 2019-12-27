@@ -33,6 +33,9 @@ class Node {
         this.startNode = false;
         this.endNode = false;
         this.distance = Infinity;
+
+        this.visited1 = false;
+        this.visited2 = false;
     }
 
     setDiv(div){
@@ -70,6 +73,9 @@ class Node {
         this.prev = null;
         this.distance = Infinity;
         this.wall = false;
+
+        this.visited1 = false;
+        this.visited2 = false;
     }
 
     switchWall(){

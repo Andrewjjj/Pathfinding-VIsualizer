@@ -156,20 +156,20 @@ function reset(){
 }
 
 // var qq;
-function startBFS(){
-    disableButtons();
-    // reset();
-    let [visitArray, valid] = BFS(startNode, endNode, null, null);
-    let pathArray = [];
-    if(valid){
-        pathArray = shortestPath(startNode, endNode);
-    }
-    animate(visitArray, pathArray)
-    .then(() => {
-        if(!valid) alert("No Valid Path Found!")
-        enableButtons();
-    })
-}
+// function startBFS(){
+//     disableButtons();
+//     // reset();
+//     let [visitArray, valid] = BFS(startNode, endNode, null, null);
+//     let pathArray = [];
+//     if(valid){
+//         pathArray = shortestPath(startNode, endNode);
+//     }
+//     animate(visitArray, pathArray)
+//     .then(() => {
+//         if(!valid) alert("No Valid Path Found!")
+//         enableButtons();
+//     })
+// }
 
 function stopAnimation(){
     if(running == true){
@@ -177,39 +177,76 @@ function stopAnimation(){
     }
 }
 
-function startDFS(){
+function startSearch(searchMethod){
     disableButtons();
-    // reset();
-    let visitArray = DFS(startNode, endNode, null, null);
-    // qq=visitArray;
-    let pathArray = shortestPath(startNode, endNode);
+    let visitArray, valid, pathArray=[];
+    if(searchMethod == "BFS"){
+        [visitArray, valid] = BFS(startNode, endNode, null, null);
+    }
+    else if(searchMethod == "BidirectionalBFS"){
+        [visitArray, valid] = BidirectionalBFS(startNode, endNode, null, null);
+    }
+    else if(searchMethod == "DFS"){
+        [visitArray, valid] = DFS(startNode, endNode, null, null);
+        console.log("DFS")
+        console.log(visitArray)
+    }
+    else if(searchMethod == "Dijkstra"){
+        [visitArray, valid] = Dijkstra(startNode, endNode, null, null);
+    }
+
+    if(valid){
+        pathArray = shortestPath(startNode, endNode);
+    }
     animate(visitArray, pathArray)
     .then(() => {
+        if(!valid) alert("No Valid Path Found!")
         enableButtons();
-    })
+    })    
 }
 
-function startDijkstra(){
-    disableButtons();
-    // reset();
-    let visitArray = Dijkstra(startNode, endNode, null, null);
-    let pathArray = shortestPath(startNode, endNode);
-    animate(visitArray, pathArray)
-    .then(() => {
-        
-        enableButtons();
-    })
+function resetWall(){
+    for(let nodeRow of nodeBox.nodeBox){
+        for(let node of nodeRow){
+            if(node.isWall()){
+                node.setNormal();
+            }
+        }
+    }
 }
+
+// function startDFS(){
+//     disableButtons();
+//     // reset();
+//     let visitArray = DFS(startNode, endNode, null, null);
+//     // qq=visitArray;
+//     let pathArray = shortestPath(startNode, endNode);
+//     animate(visitArray, pathArray)
+//     .then(() => {
+//         enableButtons();
+//     })
+// }
+
+// function startDijkstra(){
+//     disableButtons();
+//     // reset();
+//     let visitArray = Dijkstra(startNode, endNode, null, null);
+//     let pathArray = shortestPath(startNode, endNode);
+//     animate(visitArray, pathArray)
+//     .then(() => {
+//         enableButtons();
+//     })
+// }
 
 async function animate(visitArray, pathArray){
     running = true;
     for(let e of visitArray){
-
         if(running == false){
             reset();
             return;
         }
         await sleep(20);
+        console.log(e);
         e.animateVisit();
     }
     for(let e of pathArray){
