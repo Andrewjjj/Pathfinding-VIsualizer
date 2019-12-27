@@ -220,6 +220,7 @@ function resetWall(){
 
 function startDFSMaze(){
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
+    console.log(wallArray)
     let pathArray=DepthFirstSearchMaze(GRID_WIDTH-1, GRID_HEIGHT-1);
     animateMaze(wallArray, pathArray);
     
@@ -230,7 +231,7 @@ function coverWall(width, height){
     for(let col=0; col<width; col++){
         for(let row=0; row<height; row++){
             let node = nodeBox.get(col, row);
-            if(!node.startNode || !node.endNode){
+            if(!node.startNode && !node.endNode){
                 visitArray.push(node);
                 node.wall = true;
             }
@@ -247,7 +248,7 @@ async function animateMaze(wallArray, pathArray){
             return;
         }
         await sleep(5);
-        console.log(e);
+        // console.log(e);
         e.animateWall();
     }
     for(let e of pathArray){
@@ -270,7 +271,7 @@ async function animateSearch(visitArray, pathArray){
             return;
         }
         await sleep(20);
-        console.log(e);
+        // console.log(e);
         e.animateVisit();
     }
     for(let e of pathArray){
@@ -316,7 +317,7 @@ async function testAnimate(array){
         //     return;
         // }
         await sleep(20);
-        console.log(e);
+        // console.log(e);
         e.animateVisit();
     }
 }
