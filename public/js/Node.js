@@ -52,6 +52,7 @@ class Node {
     visit(){
         this.visited = true;
     }
+
     visitWall(){
         this.wallVisited = true;
     }
@@ -69,6 +70,14 @@ class Node {
 
     animatePath(){
         this.divChild.className += " pathNode";
+    }
+
+    animateWall(){
+        this.divChild.className = this.divChild.className.replace(" node", " wallNode");
+    }
+
+    animateNormal(){
+        this.divChild.className = this.divChild.className.replace(" wallNode", " node");
     }
 
     reset(){

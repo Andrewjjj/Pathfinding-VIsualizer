@@ -47,8 +47,8 @@ function getAllNeighborNodes(node){
     let neighborsList=[];
     
     // TODO: Change this Later
-    let MAX_HEIGHT = 14-1;
-    let MAX_WIDTH = 30-1;
+    let MAX_HEIGHT = 15-1;
+    let MAX_WIDTH = 31-1;
     // Turns Clockwise
     if(node.x != 0){
         // if(node.y != MAX_HEIGHT){

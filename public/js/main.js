@@ -10,6 +10,9 @@ var endNode;
 var stopFlag=false;
 var running=false;
 
+let GRID_WIDTH = 31;
+let GRID_HEIGHT = 15;
+
 // var startDragVar = false;
 var startDragWall = false;
 var mouseDown = false;
@@ -29,10 +32,10 @@ function init(){
 function initializeGrid(){
     const gridContainer = document.getElementById('grid-container');
     var nodeContainer=[];
-    for(let row=0; row<14; row++){
+    for(let row=0; row<GRID_HEIGHT; row++){
         let rowContainer = createGridRow();
         let nodeRow=[];
-        for(let col=0; col<30; col++){
+        for(let col=0; col<GRID_WIDTH; col++){
             let node = new Node(col, row);
             let div = createGridPiece(row, col);
             addDivEventListener(div);
@@ -198,7 +201,7 @@ function startSearch(searchMethod){
     if(valid){
         pathArray = shortestPath(startNode, endNode);
     }
-    animate(visitArray, pathArray)
+    animateSearch(visitArray, pathArray)
     .then(() => {
         if(!valid) alert("No Valid Path Found!")
         enableButtons();
@@ -215,30 +218,51 @@ function resetWall(){
     }
 }
 
-// function startDFS(){
-//     disableButtons();
-//     // reset();
-//     let visitArray = DFS(startNode, endNode, null, null);
-//     // qq=visitArray;
-//     let pathArray = shortestPath(startNode, endNode);
-//     animate(visitArray, pathArray)
-//     .then(() => {
-//         enableButtons();
-//     })
-// }
+function startDFSMaze(){
+    let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
+    let pathArray=DepthFirstSearchMaze(GRID_WIDTH-1, GRID_HEIGHT-1);
+    animateMaze(wallArray, pathArray);
+    
+}
 
-// function startDijkstra(){
-//     disableButtons();
-//     // reset();
-//     let visitArray = Dijkstra(startNode, endNode, null, null);
-//     let pathArray = shortestPath(startNode, endNode);
-//     animate(visitArray, pathArray)
-//     .then(() => {
-//         enableButtons();
-//     })
-// }
+function coverWall(width, height){
+    let visitArray=[];
+    for(let col=0; col<width; col++){
+        for(let row=0; row<height; row++){
+            let node = nodeBox.get(col, row);
+            if(!node.startNode || !node.endNode){
+                visitArray.push(node);
+                node.wall = true;
+            }
+        }
+    }
+    return visitArray;
+}
 
-async function animate(visitArray, pathArray){
+async function animateMaze(wallArray, pathArray){
+    running = true;
+    for(let e of wallArray){
+        if(running == false){
+            reset();
+            return;
+        }
+        await sleep(5);
+        console.log(e);
+        e.animateWall();
+    }
+    for(let e of pathArray){
+        if(running == false){
+            reset();
+            return;
+        }
+        await sleep(10);
+        e.animateNormal();
+    }
+    // await sleep(1000);
+    running = false;
+}
+
+async function animateSearch(visitArray, pathArray){
     running = true;
     for(let e of visitArray){
         if(running == false){
@@ -285,6 +309,17 @@ function enableButtons(){
     }
 }
 
+async function testAnimate(array){
+    for(let e of array){
+        // if(running == false){
+        //     reset();
+        //     return;
+        // }
+        await sleep(20);
+        console.log(e);
+        e.animateVisit();
+    }
+}
 
 function sleep(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -307,11 +342,6 @@ function createGridRow(){
     return div;
 }
 
-class dragApp {
-    static dragStart(e){
-
-    }
-}
 
 
 // let e=window.event;
