@@ -10,7 +10,21 @@ function DepthFirstSearchMaze(width, height){
     }
     visitArray.push(node);
 
-    
+    let stack = new Stack();
+    stack.push(node);
+    while(!stack.isEmpty()){
+        node = stack.pop();
+        node.visitWall();
+        visitArray.push(node);
+        
+        let neighborNodes = getAllNeighborNodes(node);
+        let randomDirection = ParseInt(Math.random()*4);
+        
+        node = neighborNodes[randomDirection];
+        stack.push(node);
+        node.visitWall();
+        
+    }
 
     // node.setWall();
 }
