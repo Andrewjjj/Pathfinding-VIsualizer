@@ -37,6 +37,8 @@ class Node {
 
         this.visited1 = false;
         this.visited2 = false;
+
+        this.setNumber = null;
     }
 
     setDiv(div){
@@ -89,6 +91,7 @@ class Node {
 
         this.visited1 = false;
         this.visited2 = false;
+        this.setNumber = null;
     }
 
     switchWall(){

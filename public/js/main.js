@@ -226,6 +226,13 @@ function startDFSMaze(){
     
 }
 
+function startEllerMaze(){
+    let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
+    let arr = EllersAlgorithm(GRID_WIDTH, GRID_HEIGHT);
+    animateMaze(wallArray, arr);
+    // testAnimate(arr);
+}
+
 function coverWall(width, height){
     let visitArray=[];
     for(let col=0; col<width; col++){
