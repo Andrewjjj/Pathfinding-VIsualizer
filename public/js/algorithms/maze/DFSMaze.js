@@ -8,7 +8,7 @@ function DepthFirstSearchMaze(width, height){
     while(startY%2==0){
         startY = parseInt(Math.random()*height);
     }
-    console.log(startX, startY);
+    // console.log(startX, startY);
     let node = nodeBox.get(startX, startY);
     // let visitArray = createWall(width, height);
     
@@ -24,82 +24,91 @@ function DepthFirstSearchMaze(width, height){
     let stack = new Stack();
     stack.push(node);
     node.wall = false;
-    // let a= 100;
+    temp = node;
+    // let a=10;
     while(!stack.isEmpty()){
-        // console.log("IN")
+        // console.log(a)
         // a--;
-        // if(a<0){
-        //     let q=[];
-        //     for(let a of visitArray){
-        //         console.log(a.div);
-        //         q.push(a.div)
+        // if(a<0) {
+        //     console.log("ERR")
+        //     for(let n of visitArray){
+        //         console.log(n.div);
         //     }
-        //     return q;
+        //     return;
         // }
-            
+        // console.log("I")
         node = stack.pop();
-        visitArray.push(node);
+        let betweenNode = getNodesInBetween(node, temp)
+        // console.log(betweenNode)
+        if(node.isWall()){
+            betweenNode.wall = false;
+            node.wall = false;
+            visitArray.push(betweenNode);
+            visitArray.push(node);
+        }
+        temp = node;
         
         // let randomDirection = parseInt(Math.random()*4);
         let randomDirectionArray = shuffle([0,1,2,3]);
         // console.log(randomDirection);
         for(let directionVar of randomDirectionArray){
+            
             // console.log("In 2")
             // console.log(node)
             switch(directionVar){
                 case 0:
                     //Left
                     if(node.x-2 < 1){
-                        console.log("4")
+                        // console.log("4")
                         continue;
                     }
                     if(nodeBox.get(node.x-2, node.y).isWall()){
-                        nodeBox.get(node.x-2, node.y).wall = false;
-                        nodeBox.get(node.x-1, node.y).wall = false;
-                        visitArray.push(nodeBox.get(node.x-1, node.y));
-                        visitArray.push(nodeBox.get(node.x-2, node.y));
+                        // nodeBox.get(node.x-2, node.y).wall = false;
+                        // nodeBox.get(node.x-1, node.y).wall = false;
+                        // visitArray.push(nodeBox.get(node.x-1, node.y));
+                        // visitArray.push(nodeBox.get(node.x-2, node.y));
                         stack.push(nodeBox.get(node.x-2, node.y));
                     }
                     break;
                 case 1:
                     //UP
                     if(node.y-2 < 1){
-                        console.log("4")
+                        // console.log("4")
                         continue;
                     }
                     if(nodeBox.get(node.x, node.y-2).isWall()){
-                        nodeBox.get(node.x, node.y-1).wall = false;
-                        nodeBox.get(node.x, node.y-2).wall = false;
-                        visitArray.push(nodeBox.get(node.x, node.y-1));
-                        visitArray.push(nodeBox.get(node.x, node.y-2));
+                        // nodeBox.get(node.x, node.y-1).wall = false;
+                        // nodeBox.get(node.x, node.y-2).wall = false;
+                        // visitArray.push(nodeBox.get(node.x, node.y-1));
+                        // visitArray.push(nodeBox.get(node.x, node.y-2));
                         stack.push(nodeBox.get(node.x, node.y-2));
                     }
                     break;
                 case 2:
                     //Right
                     if(node.x+2 > width-1){
-                        console.log("4")
+                        // console.log("4")
                         continue;
                     }
                     if(nodeBox.get(node.x+2, node.y).isWall()){
-                        nodeBox.get(node.x+2, node.y).wall = false;
-                        nodeBox.get(node.x+1, node.y).wall = false;
-                        visitArray.push(nodeBox.get(node.x+1, node.y));
-                        visitArray.push(nodeBox.get(node.x+2, node.y));
+                        // nodeBox.get(node.x+2, node.y).wall = false;
+                        // nodeBox.get(node.x+1, node.y).wall = false;
+                        // visitArray.push(nodeBox.get(node.x+1, node.y));
+                        // visitArray.push(nodeBox.get(node.x+2, node.y));
                         stack.push(nodeBox.get(node.x+2, node.y));
                     }
                     break;
                 case 3:
                     //Down
                     if(node.y+2 > height-1){
-                        console.log("4")
+                        // console.log("4")
                         continue;
                     }
                     if(nodeBox.get(node.x, node.y+2).isWall()){
-                        nodeBox.get(node.x, node.y+2).wall = false;
-                        nodeBox.get(node.x, node.y+1).wall = false;
-                        visitArray.push(nodeBox.get(node.x, node.y+1));
-                        visitArray.push(nodeBox.get(node.x, node.y+2));
+                        // nodeBox.get(node.x, node.y+2).wall = false;
+                        // nodeBox.get(node.x, node.y+1).wall = false;
+                        // visitArray.push(nodeBox.get(node.x, node.y+1));
+                        // visitArray.push(nodeBox.get(node.x, node.y+2));
                         stack.push(nodeBox.get(node.x, node.y+2));
                     }
                     break;
@@ -117,6 +126,26 @@ function DepthFirstSearchMaze(width, height){
     return visitArray;
 
     // node.setWall();
+}
+function getNodesInBetween(node1, node2){
+    if(node1 == node2) return node1;
+
+    if(node1.x == node2.x){
+        if(node1.y < node2.y){
+            return nodeBox.get(node1.x, node1.y+1);
+        }
+        else{
+            return nodeBox.get(node1.x, node1.y-1);
+        }
+    }
+    else{
+        if(node1.x < node2.x){
+            return nodeBox.get(node1.x+1, node1.y);
+        }
+        else{
+            return nodeBox.get(node1.x-1, node1.y);
+        }
+    }
 }
 
 function shuffle(arr){
