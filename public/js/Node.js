@@ -39,6 +39,7 @@ class Node {
         this.visited2 = false;
 
         this.setNumber = null;
+        this.init11 = null;
     }
 
     setDiv(div){
@@ -86,8 +87,10 @@ class Node {
         this.visited = false;
         this.divChild.className = " node";
         this.prev = null;
-        this.distance = Infinity;
         this.wall = false;
+        this.wallVisited = false;
+        this.distance = Infinity;
+        this.visited = false;
 
         this.visited1 = false;
         this.visited2 = false;

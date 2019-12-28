@@ -199,7 +199,9 @@ function startSearch(searchMethod){
     }
 
     if(valid){
+        console.log("Valid")
         pathArray = shortestPath(startNode, endNode);
+        console.log("Valid Pass")
     }
     animateSearch(visitArray, pathArray)
     .then(() => {
@@ -219,6 +221,7 @@ function resetWall(){
 }
 
 function startDFSMaze(){
+    reset();
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
     console.log(wallArray)
     let pathArray=DepthFirstSearchMaze(GRID_WIDTH-1, GRID_HEIGHT-1);
@@ -227,9 +230,14 @@ function startDFSMaze(){
 }
 
 function startEllerMaze(){
+    reset();
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
-    let arr = EllersAlgorithm(GRID_WIDTH, GRID_HEIGHT);
-    animateMaze(wallArray, arr);
+    console.log("WallArr")
+    console.log(wallArray)
+    let pathArray = EllersAlgorithm(GRID_WIDTH, GRID_HEIGHT);
+    console.log("PathArr")
+    console.log(pathArray)
+    animateMaze(wallArray, pathArray);
     // testAnimate(arr);
 }
 
@@ -254,7 +262,7 @@ async function animateMaze(wallArray, pathArray){
             reset();
             return;
         }
-        await sleep(5);
+        await sleep(2);
         // console.log(e);
         e.animateWall();
     }
@@ -263,7 +271,7 @@ async function animateMaze(wallArray, pathArray){
             reset();
             return;
         }
-        await sleep(10);
+        await sleep(15);
         e.animateNormal();
     }
     // await sleep(1000);
