@@ -191,6 +191,7 @@ function startSearch(searchMethod){
     }
     else if(searchMethod == "DFS"){
         [visitArray, valid] = DFS(startNode, endNode, null, null);
+        sortShortestDFS(startNode, endNode)
         console.log("DFS")
         console.log(visitArray)
     }
@@ -200,7 +201,10 @@ function startSearch(searchMethod){
 
     if(valid){
         console.log("Valid")
+        // console.log()
+        try{
         pathArray = shortestPath(startNode, endNode);
+        }catch(err){console.log(err)}
         console.log("Valid Pass")
     }
     animateSearch(visitArray, pathArray)

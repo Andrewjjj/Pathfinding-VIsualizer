@@ -9,15 +9,19 @@ function DFS(startNode, endNode, size, wallNodes){
         a--;
         if(a<0) {
             console.log(visitArray);
-            return
+            return;
         }
         let node = stack.pop();
         node.visit();
-        if(!(Math.abs(prev.x-node.x)>1^Math.abs(prev.y-node.y)>1)){
-            node.prev = prev;
-        }
-        visitArray.push(node);
+        // if(node.prev != prev){
+        
+        console.log(node)
+        node.prev = prev;
         prev = node;
+        visitArray.push(node);
+        console.log(node != startNode)
+        
+        // }
         if(node == endNode){
             console.log("Found")
             return [visitArray, true];
@@ -35,4 +39,30 @@ function DFS(startNode, endNode, size, wallNodes){
     }
     console.log("Not Found")
     return [visitArray, false];
+}
+
+// Fix this
+function sortShortestDFS(startNode, endNode){
+    var path = [];
+    var node = endNode;
+    let temp = node;
+    path.push(node);
+    a=200;
+    console.log("G")
+    while(node != startNode && a-->0){
+        console.log("23")
+        node = node.prev;
+        while(Math.abs(node.prev.x-temp.x)>1 || Math.abs(node.prev.y-temp.y)>1){
+            node = node.prev;
+            console.log("45")
+            console.log(node);
+            console.log(temp);
+            a--;
+            if(a<0) return;
+        }
+        path.push(node);
+        temp = node;
+    }
+    // console.log(path)
+    return path;
 }

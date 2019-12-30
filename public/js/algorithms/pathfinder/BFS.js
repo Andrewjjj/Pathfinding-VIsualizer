@@ -97,10 +97,16 @@ function shortestPath(startNode, endNode){
     var path = [];
     var node = endNode;
     path.push(node);
+    // a=200;
+    console.log("going In")
+    console.log(startNode)
+    console.log(endNode);
     while(node != startNode){
+        // console.log(a)
         node = node.prev;
         path.push(node);
     }
+    // console.log(path)
     return path;
 }
 

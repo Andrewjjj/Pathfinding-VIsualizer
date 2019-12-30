@@ -7,11 +7,12 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
     while(true){
         let queueSize = queue.length();
         if(queueSize == 0) return [visitArray, false];
-        let endNodeNeighbors = getAllNeighborNodes(endNode);
+        // let endNodeNeighbors = getAllNeighborNodes(endNode);
         while(queueSize--){
             let node = queue.dequeue();
             node.visit();
 
+            if(node == endNode) return [visitArray, true]; 
             // Goto the vertex with the shortest distance
             let neighborNodes = getAllNeighborNodes(node);
             //
@@ -28,9 +29,10 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
             }
         }
         // console.log(visitArray);
-        if(neighborsAllVisited(endNode)){
-            return [visitArray, true];
-        }
+        // if(neighborsAllVisited(endNode)){
+        //     return [visitArray, true];
+        // }
+        // if()
     }
 }
 
@@ -38,7 +40,7 @@ function neighborsAllVisited(node){
     let neighborNodes = getAllNeighborNodes(node);
     let count=0;
     for(let n of neighborNodes){
-        if(n.visited == true) count++;
+        if(n.visited == true || n.isWall()) count++;
     }
     return count==4;
 }
