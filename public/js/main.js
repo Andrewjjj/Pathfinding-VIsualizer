@@ -191,9 +191,9 @@ function startSearch(searchMethod){
     }
     else if(searchMethod == "DFS"){
         [visitArray, valid] = DFS(startNode, endNode, null, null);
-        sortShortestDFS(startNode, endNode)
-        console.log("DFS")
-        console.log(visitArray)
+        // sortShortestDFS(startNode, endNode)
+        // console.log("DFS")
+        // console.log(visitArray)
     }
     else if(searchMethod == "Dijkstra"){
         [visitArray, valid] = Dijkstra(startNode, endNode, null, null);
