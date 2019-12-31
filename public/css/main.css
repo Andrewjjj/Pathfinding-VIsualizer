@@ -65,6 +65,7 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
+    border: none;
   }
 
 

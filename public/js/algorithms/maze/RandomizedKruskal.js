@@ -27,7 +27,7 @@ function RandomizedKruskal(width, height){
                 }
             }
         }
-        console.log(checkSet);
+        // console.log(checkSet);
         if(checkSet.size==1) break;
     }
     // console.log("Done");
@@ -83,7 +83,7 @@ function converConnectedNodeToSet(node){
 
     while(!stack.isEmpty()){
         let node = stack.pop();
-        console.log(node.div);
+        // console.log(node.div);
         visitArray.push(node);
         node.wall = false;
         node.setNumber = nodeSetNumber;
