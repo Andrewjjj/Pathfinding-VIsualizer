@@ -12,6 +12,17 @@ class NodeBox{
     get(x, y){
         return this.nodeBox[y][x];
     }
+
+    DEBUG_show(){
+        for(let nodeRow of this.nodeBox){
+            for(let node of nodeRow){
+                console.log(node.setNumber == null)
+                if(node.setNumber != null){
+                    node.div.innerText = node.setNumber;
+                }
+            }
+        }
+    }
 }
 
 class NodeAnimator {
@@ -127,4 +138,10 @@ class Node {
         this.divChild.className = this.divChild.className.replace(" wallNode", " node");
         this.wall = false;
     }
+
+    
+
+    // DEBUG_cancel(){
+
+    // }
 }

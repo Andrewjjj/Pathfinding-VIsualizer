@@ -245,6 +245,12 @@ function startEllerMaze(){
     // testAnimate(arr);
 }
 
+function startKruskalMaze(){
+    let wallArray = coverWall(GRID_WIDTH, GRID_HEIGHT);
+    let pathArray = RandomizedKruskal(GRID_WIDTH, GRID_HEIGHT);
+    animateMaze(wallArray, pathArray);
+}
+
 function coverWall(width, height){
     let visitArray=[];
     for(let col=0; col<width; col++){
