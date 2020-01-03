@@ -1,18 +1,11 @@
-function DFS(startNode, endNode, size, wallNodes){
+function DFS(startNode, endNode){
     let stack = new Stack();
     let visitStack = new Stack();
     let visitArray = [];
     let prev = startNode;
     stack.push(startNode);
     visitStack.push(startNode);
-    let a=500;
     while(!stack.isEmpty()){
-        console.log(a)
-        a--;
-        if(a<0) {
-            console.log(visitArray);
-            return;
-        }
         let node = stack.pop();
         node.visit();
         // if(node.prev != prev){

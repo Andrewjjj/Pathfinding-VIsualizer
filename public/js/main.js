@@ -184,19 +184,16 @@ function startSearch(searchMethod){
     disableButtons();
     let visitArray, valid, pathArray=[];
     if(searchMethod == "BFS"){
-        [visitArray, valid] = BFS(startNode, endNode, null, null);
+        [visitArray, valid] = BFS(startNode, endNode);
     }
     else if(searchMethod == "BidirectionalBFS"){
-        [visitArray, valid] = BidirectionalBFS(startNode, endNode, null, null);
+        [visitArray, valid] = BidirectionalBFS(startNode, endNode);
     }
     else if(searchMethod == "DFS"){
-        [visitArray, valid] = DFS(startNode, endNode, null, null);
-        // sortShortestDFS(startNode, endNode)
-        // console.log("DFS")
-        // console.log(visitArray)
+        [visitArray, valid] = DFS(startNode, endNode);
     }
     else if(searchMethod == "Dijkstra"){
-        [visitArray, valid] = Dijkstra(startNode, endNode, null, null);
+        [visitArray, valid] = Dijkstra(startNode, endNode);
     }
 
     if(valid){
@@ -212,6 +209,20 @@ function startSearch(searchMethod){
         if(!valid) alert("No Valid Path Found!")
         enableButtons();
     })    
+}
+
+function startBidirectionalBFS(){
+    disableButtons();
+    let visitArray, valid, pathArray=[];
+    [visitArray, valid] = BidirectionalBFS(startNode, endNode);
+    console.log(visitArray);
+    if(valid){
+        pathArray = shortestPathBidirectional(startNode, endNode, visitArray[visitArray.length-1]);
+    }
+    animateSearch(visitArray, pathArray)
+    .then(() => {
+        if(!valid) alert("No valid path foundd!!!23");
+    })
 }
 
 function resetWall(){

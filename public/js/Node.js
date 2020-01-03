@@ -40,6 +40,7 @@ class Node {
         this.div;
         this.divChild
         this.prev;
+        this.next;
         this.wall = false;
         this.wallVisited = false;
         this.startNode = false;

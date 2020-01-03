@@ -27,16 +27,6 @@ function DepthFirstSearchMaze(width, height){
     temp = node;
     // let a=10;
     while(!stack.isEmpty()){
-        // console.log(a)
-        // a--;
-        // if(a<0) {
-        //     console.log("ERR")
-        //     for(let n of visitArray){
-        //         console.log(n.div);
-        //     }
-        //     return;
-        // }
-        // console.log("I")
         node = stack.pop();
         let betweenNode = getNodesInBetween(node, temp)
         // console.log(betweenNode)

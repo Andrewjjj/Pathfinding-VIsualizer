@@ -12,6 +12,7 @@ function randomizedPrim(width, height){
         queueArray.splice(randomIndex,1);
 
         
+        
     }
 
 }

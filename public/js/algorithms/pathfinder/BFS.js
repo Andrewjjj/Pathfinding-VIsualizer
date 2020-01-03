@@ -1,7 +1,7 @@
 // import { Queue } from "Queue";
 // import { Stack } from "Stack";
 
-function BFS(startNode, endNode, size, wallNodes){
+function BFS(startNode, endNode, grid_width, grid_height){
     let visitArray=[]; 
     let queue = new Queue();
     queue.enqueue(startNode);
@@ -19,10 +19,10 @@ function BFS(startNode, endNode, size, wallNodes){
         // console.log("Queue Len: " + queueLen);
         while(queueLen != 0){
             let node = queue.dequeue();
-            var neighborNodes = getNeighborNodes(node);
+            var neighborNodes = getAllNeighborNodes(node);
             // console.log(neighborNodes);
             for(let n of neighborNodes){
-                console.log
+                // console.log
                 if(n.visited == false && n.isWall() == false){
                     queue.enqueue(n);
                     n.visit();
@@ -40,14 +40,14 @@ function BFS(startNode, endNode, size, wallNodes){
     // return visitArray;
 }
 
-function BidirectionalBFS(startNode, endNode, size, wallNodes){
+function BidirectionalBFS(startNode, endNode){
     let startQueue = new Queue();
     let endQueue = new Queue();
 
     let visitArray = [];
     // let visitArray2 = [];
-    startQueue.enqueue(startQueue);
-    endQueue.enqueue(endQueue);
+    startQueue.enqueue(startNode);
+    endQueue.enqueue(endNode);
     while(true){
         let queue1len = startQueue.length();
         let queue2len = startQueue.length();
@@ -61,7 +61,7 @@ function BidirectionalBFS(startNode, endNode, size, wallNodes){
                 let node = startQueue.dequeue();
                 let neighborNodes = getAllNeighborNodes(node);
                 for (let n of neighborNodes){
-                    if(n.visited1 == false){
+                    if(n.visited1 == false && !n.isWall()){
                         startQueue.enqueue(n);
                         n.prev = node;
                         n.visited1 = true;
@@ -76,10 +76,10 @@ function BidirectionalBFS(startNode, endNode, size, wallNodes){
                 let node = endQueue.dequeue();
                 let neighborNodes = getAllNeighborNodes(node);
                 for(let n of neighborNodes){
-                    if(n.visited2 == false){
+                    if(n.visited2 == false && !n.isWall()){
                         endQueue.enqueue(n);
+                        n.next = node;
                         n.visited2 = true;
-                        node.prev = n;
                         visitArray.push(n);
                         if(n.visited1 == true){
                             return [visitArray, true];
@@ -110,8 +110,32 @@ function shortestPath(startNode, endNode){
     return path;
 }
 
+function shortestPathBidirectional(startNode, endNode, intersectNode){
+    var path = [];
+    console.log(intersectNode)
+    var nodeS = intersectNode;
+    var nodeE = intersectNode;
+    a=10;
+    while(nodeS != startNode || nodeE != endNode){
+        console.log("Loop")
+        console.log(nodeS)
+        console.log(nodeE)
+        if(nodeS != startNode){
+            
+            path.push(nodeS);
+            nodeS = nodeS.prev;
+        }
+        if(nodeE != endNode){
+            path.push(nodeE);
+            nodeE = nodeE.next;
+        }
+        if(a-- < 0) break;
+    }
+    return path;
+}
 
-function getNeighborNodes(node, wallNodes){
+
+function getNeighborNodes(node){
     let neighborsList=[];
     
     // TODO: Change this Later

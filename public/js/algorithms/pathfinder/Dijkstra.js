@@ -1,4 +1,4 @@
-function Dijkstra(startNode, endNode, size=null, wallNode=null) {
+function Dijkstra(startNode, endNode, crossBool) {
     let queue = new Queue();
     let visitArray=[];
     queue.enqueue(startNode);
@@ -28,11 +28,6 @@ function Dijkstra(startNode, endNode, size=null, wallNode=null) {
                 }
             }
         }
-        // console.log(visitArray);
-        // if(neighborsAllVisited(endNode)){
-        //     return [visitArray, true];
-        // }
-        // if()
     }
 }
 
@@ -45,50 +40,50 @@ function neighborsAllVisited(node){
     return count==4;
 }
 
-function getAllNeighborNodes(node){
+function getAllNeighborNodes(node, crossBool=false){
     let neighborsList=[];
     
-    // TODO: Change this Later
-    let MAX_HEIGHT = 15-1;
-    let MAX_WIDTH = 31-1;
     // Turns Clockwise
     if(node.x != 0){
-        // if(node.y != MAX_HEIGHT){
-        //     if(nodeBox.get(node.x-1, node.y+1).visited == false){
+        // console.log("1")
+        // if(node.y != GRID_HEIGHT && crossBool == true){
+        //     if(nodeBox.get(node.x-1, node.y+1)){
         //         neighborsList.push(nodeBox.get(node.x-1, node.y+1));
         //     }
         // }
         if(nodeBox.get(node.x-1, node.y)){
             neighborsList.push(nodeBox.get(node.x-1, node.y));
         }
-        // if(node.y != 0){
-        //     if(nodeBox.get(node.x-1, node.y-1).visited == false){
+        // if(node.y != 0 && crossBool == true){
+        //     if(nodeBox.get(node.x-1, node.y-1)){
         //         neighborsList.push(nodeBox.get(node.x-1, node.y-1));
         //     }
         // }
-        
     }
     if(node.y != 0){
+        // console.log("2")
         if(nodeBox.get(node.x, node.y-1)){
             neighborsList.push(nodeBox.get(node.x, node.y-1));
         }
     }
-    if(node.x != MAX_WIDTH){
-        // if(node.y != 0){
-        //     if(nodeBox.get(node.x+1, node.y-1).visited == false){
+    if(node.x != GRID_WIDTH-1){
+        // console.log("3")
+        // if(node.y != 0 && crossBool == true){
+        //     if(nodeBox.get(node.x+1, node.y-1)){
         //         neighborsList.push(nodeBox.get(node.x+1, node.y-1));
         //     }
         // }
         if(nodeBox.get(node.x+1, node.y)){
             neighborsList.push(nodeBox.get(node.x+1, node.y));
         }
-        // if(node.y != MAX_HEIGHT){
-        //     if(nodeBox.get(node.x+1, node.y+1).visited == false){
+        // if(node.y != GRID_HEIGHT && crossBool == true){
+        //     if(nodeBox.get(node.x+1, node.y+1)){
         //         neighborsList.push(nodeBox.get(node.x+1, node.y+1));
         //     }
         // }
     }
-    if(node.y != MAX_HEIGHT){
+    if(node.y != GRID_HEIGHT-1){
+        // console.log("4")
         if(nodeBox.get(node.x, node.y+1)){
             neighborsList.push(nodeBox.get(node.x, node.y+1));
         }
