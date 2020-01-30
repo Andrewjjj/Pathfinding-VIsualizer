@@ -19,6 +19,14 @@
     margin: 0 1px 1px 0;
 }
 
+.startNode{
+    background-color: #7DCEA0
+}
+
+.endNode{
+    background-color: #BB8FCE;
+}
+
 .visitedNode {
     /* background-image: url(diamond.svg); */
     background-color: yellow;

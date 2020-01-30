@@ -16,6 +16,8 @@ let GRID_HEIGHT = 15;
 // var startDragVar = false;
 var startDragWall = false;
 var mouseDown = false;
+let startNodeDrag = false;
+let endNodeDrag = false;
 
 const nodeBox = new NodeBox();
 console.log("Start")
@@ -61,6 +63,10 @@ function addDivEventListener(div){
         mouseDown = true;
         // console.log(e);
         let [x,y] = getDivPostion(e.srcElement.parentElement);
+        if(nodeBox.get(x,y).startNode){
+            startNodeDrag = true;
+            console.log("This is Start NOde");
+        }
         switchWall(x,y);
     }
     div.onmouseenter = (e) => {
@@ -68,8 +74,13 @@ function addDivEventListener(div){
         // console.log(window.event);
         // console.log(e);
         e.preventDefault();
-        if(mouseDown == true){
-            let [x,y] = getDivPostion(e.srcElement);
+        let [x,y] = getDivPostion(e.srcElement);
+        if(startNodeDrag){
+            let node = nodeBox.get(x, y);
+            startNode = node;
+            node.setStart();
+        }
+        else if(mouseDown == true){
             switchWall(x,y);
             // console.log("mouse Enter")
         }
@@ -78,6 +89,16 @@ function addDivEventListener(div){
         // let [x,y] = getDivPostion(e.srcElement);
         e.preventDefault();
         mouseDown = false;
+        startNodeDrag = false;
+    }
+    div.onmouseleave = (e) => {
+        e.preventDefault();
+        let [x,y] = getDivPostion(e.srcElement);
+        if(startNodeDrag){
+            console.log(nodeBox.get(x, y).div)
+            nodeBox.get(x, y).resetNode();
+        }
+        console.log("Leaving");
     }
 }
 
@@ -130,10 +151,10 @@ function setupStartEndNode(){
     endNode = nodeBox.get(END_NODE[0],END_NODE[1]);
     // const startNodeDiv = getDivAtIndex(startNode.x, startNode.y);
     // const endNodeDiv = getDivAtIndex(endNode.x, endNode.y);
-    startNode.startNode = true;
-    endNode.endNode = true;
-    setNodeColor(startNode, '#7DCEA0');
-    setNodeColor(endNode, "#BB8FCE");
+    startNode.setStart();
+    endNode.setEnd();
+    // setNodeColor(startNode, '#7DCEA0');
+    // setNodeColor(endNode, "#BB8FCE");
 }
 
 function setNodeColor(node, color){
@@ -188,6 +209,9 @@ function startSearch(searchMethod){
     }
     else if(searchMethod == "BidirectionalBFS"){
         [visitArray, valid] = BidirectionalBFS(startNode, endNode);
+        console.log("Valid?!")
+        console.log(visitArray);
+        console.log(valid);
     }
     else if(searchMethod == "DFS"){
         [visitArray, valid] = DFS(startNode, endNode);

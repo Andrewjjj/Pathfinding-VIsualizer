@@ -1,16 +1,23 @@
 <link rel="stylesheet" href="/css/main.css">
 
-<button id="BFSBtn" onclick="startSearch('BFS');">Start BFS</button> 
-<button id="BFSBtn" onclick="startBidirectionalBFS();">Start Bidirectional BFS</button> 
-<button id="DFSBtn" onclick="startSearch('DFS');">Start DFS</button> 
-<button id="DijkstraBtn" onclick="startSearch('Dijkstra');">Start Dijkstra</button> 
-<button id="DFS Maze" onclick="startDFSMaze();">Start DFS Maze</button> 
-<button id="Eler" onclick="startEllerMaze();">Start Eller</button> 
-<button id="Eler" onclick="startKruskalMaze();">Start Kruskal</button> 
+<div class="sidebar">
+    <div class="search">
+        <button id="BFSBtn" onclick="startSearch('BFS');">Start BFS</button> 
+        <button id="BFSBtn" onclick="startBidirectionalBFS();">Start Bidirectional BFS</button> 
+        <button id="DFSBtn" onclick="startSearch('DFS');">Start DFS</button> 
+        <button id="DijkstraBtn" onclick="startSearch('Dijkstra');">Start Dijkstra</button> 
+    </div>
+    <div class="maze">
+        <button id="DFS Maze" onclick="startDFSMaze();">Start DFS Maze</button> 
+        <button id="Eler" onclick="startEllerMaze();">Start Eller</button> 
+        <button id="Eler" onclick="startKruskalMaze();">Start Kruskal</button> 
+    </div>
+    <div class="util">
+        <button onclick="reset()">Reset</button> 
+        <button onclick="resetWall()">ResetWall</button> 
+    </div>
+</div>
 
-
-<button onclick="reset()">Reset</button> 
-<button onclick="resetWall()">ResetWall</button> 
 <div id='grid-container'>
     
 </div>
