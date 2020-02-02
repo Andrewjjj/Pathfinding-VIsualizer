@@ -3,15 +3,17 @@
 // import { BFS } from "BFS.js";
 // import {Queue} from "/algorithms/Queue.js";
 
-var START_NODE = [12,7];
-var END_NODE = [18,7];
+var START_NODE = [12,10];
+var END_NODE = [38,10];
 var startNode;
 var endNode;
 var stopFlag=false;
 var running=false;
 
-let GRID_WIDTH = 31;
-let GRID_HEIGHT = 15;
+let GRID_WIDTH = 51;
+let GRID_HEIGHT = 21;
+
+let ANIMATION_SPEED = 1;
 
 // var startDragVar = false;
 var startDragWall = false;
@@ -60,14 +62,20 @@ function addDivEventListener(div){
 
         // console.log(window.event);
         e.preventDefault();
-        mouseDown = true;
         // console.log(e);
         let [x,y] = getDivPostion(e.srcElement.parentElement);
-        if(nodeBox.get(x,y).startNode){
-            startNodeDrag = true;
-            console.log("This is Start NOde");
+        if(running != true){
+            mouseDown = true;
+            if(nodeBox.get(x,y).startNode){
+                startNodeDrag = true;
+                // console.log("This is Start NOde");
+            }
+            else if(nodeBox.get(x,y).endNode){
+                endNodeDrag = true;
+                // console.log("This is Start NOde");
+            }
+            switchWall(x,y);
         }
-        switchWall(x,y);
     }
     div.onmouseenter = (e) => {
 
@@ -79,6 +87,13 @@ function addDivEventListener(div){
             let node = nodeBox.get(x, y);
             startNode = node;
             node.setStart();
+            // startNode = node;
+        }
+        else if(endNodeDrag){
+            let node = nodeBox.get(x, y);
+            endNode = node;
+            node.setEnd();
+            // endNode = node;
         }
         else if(mouseDown == true){
             switchWall(x,y);
@@ -90,15 +105,20 @@ function addDivEventListener(div){
         e.preventDefault();
         mouseDown = false;
         startNodeDrag = false;
+        endNodeDrag = false;
     }
     div.onmouseleave = (e) => {
         e.preventDefault();
         let [x,y] = getDivPostion(e.srcElement);
         if(startNodeDrag){
-            console.log(nodeBox.get(x, y).div)
+            // console.log(nodeBox.get(x, y).div)
             nodeBox.get(x, y).resetNode();
         }
-        console.log("Leaving");
+        else if(endNodeDrag){
+            // console.log(nodeBox.get(x, y).div)
+            nodeBox.get(x, y).resetNode();
+        }
+        // console.log("Leaving");
     }
 }
 
@@ -271,16 +291,17 @@ function startDFSMaze(){
 function startEllerMaze(){
     reset();
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
-    console.log("WallArr")
-    console.log(wallArray)
+    // console.log("WallArr")
+    // console.log(wallArray)
     let pathArray = EllersAlgorithm(GRID_WIDTH, GRID_HEIGHT);
-    console.log("PathArr")
-    console.log(pathArray)
+    // console.log("PathArr")
+    // console.log(pathArray)
     animateMaze(wallArray, pathArray);
     // testAnimate(arr);
 }
 
 function startKruskalMaze(){
+    reset();
     let wallArray = coverWall(GRID_WIDTH, GRID_HEIGHT);
     let pathArray = RandomizedKruskal(GRID_WIDTH, GRID_HEIGHT);
     animateMaze(wallArray, pathArray);
@@ -302,12 +323,16 @@ function coverWall(width, height){
 
 async function animateMaze(wallArray, pathArray){
     running = true;
+    let v = 0;
     for(let e of wallArray){
         if(running == false){
             reset();
             return;
         }
-        await sleep(2);
+        v++;
+        if (v%GRID_HEIGHT == 0) {
+            await sleep(ANIMATION_SPEED);
+        }
         // console.log(e);
         e.animateWall();
     }
@@ -316,7 +341,7 @@ async function animateMaze(wallArray, pathArray){
             reset();
             return;
         }
-        await sleep(15);
+        await sleep(ANIMATION_SPEED);
         e.animateNormal();
     }
     // await sleep(1000);
@@ -330,7 +355,7 @@ async function animateSearch(visitArray, pathArray){
             reset();
             return;
         }
-        await sleep(20);
+        await sleep(ANIMATION_SPEED);
         // console.log(e);
         e.animateVisit();
     }
@@ -340,7 +365,7 @@ async function animateSearch(visitArray, pathArray){
             reset();
             return;
         }
-        await sleep(20);
+        await sleep(ANIMATION_SPEED);
         e.animatePath();
     }
     await sleep(1000);
@@ -349,9 +374,9 @@ async function animateSearch(visitArray, pathArray){
 
 function disableButtons(){
     let buttons = [
-        document.getElementById("BFSBtn"),
-        document.getElementById("DFSBtn"),
-        document.getElementById("DijkstraBtn"),
+        document.getElementById("beginMazeBtn"),
+        document.getElementById("beginSearchBtn"),
+        // document.getElementById("DijkstraBtn"),
     ]
     // console.log(buttons);
     for(let button of buttons){
@@ -361,9 +386,8 @@ function disableButtons(){
 
 function enableButtons(){
     let buttons = [
-        document.getElementById("BFSBtn"),
-        document.getElementById("DFSBtn"),
-        document.getElementById("DijkstraBtn"),
+        document.getElementById("beginMazeBtn"),
+        document.getElementById("beginSearchBtn"),
     ]
     for(let button of buttons){
         button.disabled = false;
@@ -376,7 +400,7 @@ async function testAnimate(array){
         //     reset();
         //     return;
         // }
-        await sleep(20);
+        await sleep(ANIMATION_SPEED);
         // console.log(e);
         e.animateVisit();
     }
