@@ -26,11 +26,25 @@ console.log("Start")
 init();
 
 function init(){
+    
+    // setRandomWeight();
+
     try{
         initializeGrid();
         setupStartEndNode();
 
     } catch(err){console.log(err)}
+
+    // showNodeWeightOnDiv();
+    
+}
+
+function removeWeightDisplay(){
+    for (let nodeRow of nodeBox.nodeBox){
+        for (let node of nodeRow){
+            node.divChild.children[0].remove();
+        }
+    }
 }
 
 function initializeGrid(){
@@ -54,6 +68,28 @@ function initializeGrid(){
         gridContainer.appendChild(rowContainer);
     }
     nodeBox.set(nodeContainer);
+}
+
+function setRandomWeight(){
+    for(let nodeRow of nodeBox.nodeBox){
+        for(let node of nodeRow){
+            node.distance = parseInt(Math.random()*21);
+        }
+    }
+}
+
+function showNodeWeightOnDiv(){
+    for(let nodeRow of nodeBox.nodeBox){
+        for (let node of nodeRow){
+            // let textDiv = document.createElement('div');
+            // let weight = node.distance;
+            let p = document.createElement('p');
+            // p.style.fontSize = '8px';
+            p.innerHTML = node.distance;
+            // textDiv.appendChild(p);
+            node.divChild.appendChild(p);
+        }
+    }
 }
 
 function addDivEventListener(div){
