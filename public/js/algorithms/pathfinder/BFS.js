@@ -114,13 +114,11 @@ function shortestPathBidirectional(startNode, endNode, intersectNode){
     console.log(intersectNode)
     var nodeS = intersectNode;
     var nodeE = intersectNode;
-    a=10;
     while(nodeS != startNode || nodeE != endNode){
         console.log("Loop")
         console.log(nodeS)
         console.log(nodeE)
         if(nodeS != startNode){
-            
             path.push(nodeS);
             nodeS = nodeS.prev;
         }
@@ -128,7 +126,6 @@ function shortestPathBidirectional(startNode, endNode, intersectNode){
             path.push(nodeE);
             nodeE = nodeE.next;
         }
-        if(a-- < 0) break;
     }
     return path;
 }

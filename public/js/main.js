@@ -268,6 +268,16 @@ function resetWall(){
     }
 }
 
+function resetPath(){
+    for(let nodeRow of nodeBox.nodeBox){
+        for(let node of nodeRow){
+            if(!node.isWall()){
+                node.reset();
+            }
+        }
+    }
+}
+
 function startDFSMaze(){
     reset();
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
@@ -280,11 +290,7 @@ function startDFSMaze(){
 function startEllerMaze(){
     reset();
     let wallArray=coverWall(GRID_WIDTH, GRID_HEIGHT);
-    // console.log("WallArr")
-    // console.log(wallArray)
     let pathArray = EllersAlgorithm(GRID_WIDTH, GRID_HEIGHT);
-    // console.log("PathArr")
-    // console.log(pathArray)
     animateMaze(wallArray, pathArray);
     // testAnimate(arr);
 }

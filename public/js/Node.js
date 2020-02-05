@@ -86,7 +86,9 @@ class Node {
     }
 
     animateVisit(){
-        this.divChild.className += " visitedNode";
+        if(this.startNode == false && this.endNode == false){
+            this.divChild.className += " visitedNode";
+        }
        
         // console.log("Animate");
         // this.div.className += "visitedNode";
