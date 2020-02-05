@@ -191,14 +191,26 @@ function getDivAtIndex(x, y){
     return gridContainer.children[y].children[x];
 }
 
-function reset(){
+function reset(flag){
     if(running == true){
         running = false;
     }
     for(let nodeRow of nodeBox.nodeBox){
         for(let node of nodeRow){
+            if(flag == "ALL"){
+                node.reset();
+            }
+            // else if(flag == "WALL"){
+            //     if(node.isWall()){
+            //         node.setNormal();
+            //     }
+            // }
+            else if(flag == "PATH"){
+                if(!node.isWall()){
+                    node.reset();
+                }
+            }
             // console.log(node);
-            node.reset();
         }
     }
     enableButtons();
